@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Should I Deploy?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container.yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .container.no {
+            background-color: #f44336;
+            color: white;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0 0 20px 0;
+        }
+        .message {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <h1 id="answer">Loading...</h1>
+        <p class="message" id="message">Checking the vibe...</p>
+    </div>
+
+    <script>
+        const yesMessages = [
+            "🚀 LET'S GOOOO!",
+            "✅ You're golden!",
+            "💪 Deploy with confidence!",
+            "🎉 Full speed ahead!",
+            "⚡ Time to ship it!",
+            "👍 Looking good, friend!"
+        ];
+
+        const noMessages = [
+            "🛑 Nope, not yet buddy!",
+            "⏰ Come back later!",
+            "🚫 Not in office hours!",
+            "🛌 Too early or too late!",
+            "❌ The spirits say NO!",
+            "😴 Office is closed!"
+        ];
+
+        function checkDeployTime() {
+            const now = new Date();
+            const day = now.getDay();
+            const hour = now.getHours();
+
+            // Check if it's a weekday (Mon-Fri) and between 9am-5pm
+            const isWeekday = day >= 1 && day <= 5;
+            const isOfficeHours = hour >= 9 && hour < 17;
+            const canDeploy = isWeekday && isOfficeHours;
+
+            const container = document.getElementById('container');
+            const answer = document.getElementById('answer');
+            const message = document.getElementById('message');
+
+            if (canDeploy) {
+                container.classList.add('yes');
+                container.classList.remove('no');
+                answer.textContent = 'YES ✅';
+                message.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
+            } else {
+                container.classList.add('no');
+                container.classList.remove('yes');
+                answer.textContent = 'NOPE ❌';
+                message.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
+            }
+        }
+
+        checkDeployTime();
+        // Refresh every minute
+        setInterval(checkDeployTime, 60000);
+    </script>
+</body>
+</html>
