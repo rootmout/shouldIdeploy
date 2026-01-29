@@ -15,23 +15,28 @@
             font-family: Arial, sans-serif;
             transition: background-color 0.5s;
         }
+        body.yes {
+            background-color: #4CAF50;
+        }
+        body.no {
+            background-color: #f44336;
+        }
         .container {
             text-align: center;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .container.yes {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .container.no {
-            background-color: #f44336;
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
         }
         h1 {
             font-size: 3em;
             margin: 0 0 20px 0;
+        }
+        .title {
+            font-size: 1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
         .message {
             font-size: 1.5em;
@@ -41,27 +46,37 @@
 </head>
 <body>
     <div class="container" id="container">
+        <p class="title">Should I Deploy?</p>
         <h1 id="answer">Loading...</h1>
+        <h3 id="emote"></h2>
         <p class="message" id="message">Checking the vibe...</p>
     </div>
 
     <script>
         const yesMessages = [
-            "🚀 LET'S GOOOO!",
-            "✅ You're golden!",
-            "💪 Deploy with confidence!",
-            "🎉 Full speed ahead!",
-            "⚡ Time to ship it!",
-            "👍 Looking good, friend!"
+            "LET'S GOOOO!",
+            "You're golden!",
+            "Deploy with confidence!",
+            "Full speed ahead!",
+            "Time to ship it!",
+            "Looking good, friend!",
+            "All systems go!",
+            "The time is now!",
+            "Deploy like the wind!",
+            "Your code is ready!"
         ];
 
         const noMessages = [
-            "🛑 Nope, not yet buddy!",
-            "⏰ Come back later!",
-            "🚫 Not in office hours!",
-            "🛌 Too early or too late!",
-            "❌ The spirits say NO!",
-            "😴 Office is closed!"
+            "Nope, not yet buddy!",
+            "Come back later!",
+            "Not in office hours!",
+            "Too early or too late!",
+            "The spirits say NO!",
+            "Office is closed!",
+            "Wait for business hours!",
+            "Not the time, friend!",
+            "Try again tomorrow!",
+            "After hours are off limits!"
         ];
 
         function checkDeployTime() {
@@ -69,31 +84,31 @@
             const day = now.getDay();
             const hour = now.getHours();
 
-            // Check if it's a weekday (Mon-Fri) and between 9am-5pm
             const isWeekday = day >= 1 && day <= 5;
             const isOfficeHours = hour >= 9 && hour < 17;
             const canDeploy = isWeekday && isOfficeHours;
 
-            const container = document.getElementById('container');
+            const body = document.body;
             const answer = document.getElementById('answer');
+            const emote = document.getElementById('emote');
             const message = document.getElementById('message');
 
             if (canDeploy) {
-                container.classList.add('yes');
-                container.classList.remove('no');
-                answer.textContent = 'YES ✅';
+                body.classList.add('yes');
+                body.classList.remove('no');
+                answer.textContent = 'YES';
+                emote.textContent = '◕‿‿◕';
                 message.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
             } else {
-                container.classList.add('no');
-                container.classList.remove('yes');
-                answer.textContent = 'NOPE ❌';
+                body.classList.add('no');
+                body.classList.remove('yes');
+                answer.textContent = 'NOPE';
+                emote.textContent = 'ಥ﹏ಥ';
                 message.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
             }
         }
 
         checkDeployTime();
-        // Refresh every minute
-        setInterval(checkDeployTime, 60000);
     </script>
 </body>
 </html>
