@@ -18,6 +18,9 @@
         body.yes {
             background-color: #4CAF50;
         }
+        body.maybe {
+            background-color: #ff9800;
+        }
         body.no {
             background-color: #f44336;
         }
@@ -66,6 +69,19 @@
             "Your code is ready!"
         ];
 
+        const maybeMessages = [
+            "Hmm, maybe...",
+            "Proceed with caution!",
+            "Check twice, deploy once!",
+            "Are you sure?",
+            "Think it over!",
+            "Could go either way!",
+            "Decide wisely!",
+            "Tread carefully!",
+            "It's a toss-up!",
+            "Evaluate the risks!"
+        ];
+
         const noMessages = [
             "Nope, not yet buddy!",
             "Come back later!",
@@ -85,30 +101,47 @@
             const hour = now.getHours();
 
             const isWeekday = day >= 1 && day <= 5;
-            const isOfficeHours = hour >= 9 && hour < 17;
-            const canDeploy = isWeekday && isOfficeHours;
+            const isOfficeHours = hour >= 8 && hour < 17;
+            const isExtendedOfficeHours = hour >= 17 && hour < 19;
+            var canDeploy = "no";
+            if (isWeekday && isOfficeHours) {
+                canDeploy = "yes";
+            }
+            if (isWeekday && isExtendedOfficeHours) {
+                canDeploy = "maybe";
+            }
+            if (day === 5 && hour >= 12) {
+                canDeploy = "maybe";
+            }
 
             const body = document.body;
             const answer = document.getElementById('answer');
             const emote = document.getElementById('emote');
             const message = document.getElementById('message');
 
-            if (canDeploy) {
+            if (canDeploy === "yes") {
                 body.classList.add('yes');
                 body.classList.remove('no');
                 answer.textContent = 'YES';
                 emote.textContent = '◕‿‿◕';
                 message.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
+            } else if (canDeploy === "maybe") {
+                body.classList.add('maybe');
+                body.classList.remove('no');
+                answer.textContent = 'MAYBE';
+                emote.textContent = '¯\\_(ツ)_/¯';
+                message.textContent = maybeMessages[Math.floor(Math.random() * maybeMessages.length)];
             } else {
                 body.classList.add('no');
                 body.classList.remove('yes');
                 answer.textContent = 'NOPE';
-                emote.textContent = 'ಥ﹏ಥ';
+                emote.textContent = '>_<';
                 message.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
             }
         }
 
         checkDeployTime();
+        setInterval(checkDeployTime, 5 * 60 * 1000);
     </script>
 </body>
 </html>
