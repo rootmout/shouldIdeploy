@@ -9,6 +9,7 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -25,21 +26,47 @@
             background-color: #f44336;
         }
         .container {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
         }
-        h1 {
-            font-size: 3em;
-            margin: 0 0 20px 0;
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .title {
-            font-size: 1em;
-            margin-bottom: 20px;
+            font-size: 1.5em;
+            margin: 0 0 20px 0;
             opacity: 0.9;
+            color: white;
+            text-align: left;
+        }
+        .content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+        .left-side {
+            text-align: left;
+            flex: 1;
+        }
+        .right-side {
+            text-align: center;
+            flex: 2.5;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 10px 0 0 0;
+        }
+        
+        #emote {
+            font-size: 2em;
+            margin: 10px 0;
         }
         .message {
             font-size: 1.5em;
@@ -48,11 +75,19 @@
     </style>
 </head>
 <body>
-    <div class="container" id="container">
+    <div class="wrapper">
         <p class="title">Should I Deploy?</p>
-        <h1 id="answer">Loading...</h1>
-        <h3 id="emote"></h2>
-        <p class="message" id="message">Checking the vibe...</p>
+        <div class="container" id="container">
+            <div class="content">
+            <div class="left-side">
+                <h1 id="answer">Loading...</h1>
+            </div>
+            <div class="right-side">
+                <h3 id="emote"></h3>
+                <p class="message" id="message">Checking the vibe...</p>
+            </div>
+        </div>
+        </div>
     </div>
 
     <script>
@@ -110,8 +145,11 @@
             if (isWeekday && isExtendedOfficeHours) {
                 canDeploy = "maybe";
             }
-            if (day === 5 && hour >= 12) {
+            if (day === 5 && hour >= 14) {
                 canDeploy = "maybe";
+            }
+            if (day === 5 && hour >= 17) {
+                canDeploy = "no";
             }
 
             const body = document.body;
@@ -123,7 +161,7 @@
                 body.classList.add('yes');
                 body.classList.remove('no');
                 answer.textContent = 'YES';
-                emote.textContent = '◕‿‿◕';
+                emote.textContent = '◕‿◕';
                 message.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
             } else if (canDeploy === "maybe") {
                 body.classList.add('maybe');
