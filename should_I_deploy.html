@@ -72,6 +72,20 @@
             font-size: 1.5em;
             font-weight: bold;
         }
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: rgba(255, 255, 255, 1);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -123,7 +137,10 @@
             "Dont live in deployment fear",
             "Good karma is coming your way",
             "With great power comes great responsibility",
-            "Deployment is like a chocolate box..."
+            "Deployment is like a chocolate box...",
+            "What can possibly go wrong?",
+            "May the force be with you",
+            "Trust the process"
         ];
 
         const maybeMessages = [
@@ -231,5 +248,9 @@
         checkDeployTime();
         setInterval(checkDeployTime, 5 * 60 * 1000);
     </script>
+
+    <div class="footer">
+        Sources on <a href="https://github.com/rootmout/shouldIdeploy/tree/main">Github</a>
+    </div>
 </body>
 </html>
